@@ -13,6 +13,7 @@
 
 - (instancetype)copyWithZone:(NSZone *)zone {
     __typeof__(self) copy = [[self.class alloc] init];
+    copy.separatorCharacter = _separatorCharacter;
     return copy;
 }
 
@@ -49,10 +50,14 @@
     NSUInteger cursorPositionInSpacelessString = cursorPosition == NULL ? 0 : *cursorPosition;
     BOOL isAmericanExpress = [string hasPrefix:@"34"] || [string hasPrefix:@"37"];
     
+    if (self.separatorCharacter == nil || self.separatorCharacter.length != 1) {
+        self.separatorCharacter = @" ";
+    }
+    
     for (NSUInteger i=0; i<[string length]; i++) {
         BOOL shouldAppendSpace = isAmericanExpress ? (i==4 || i==10) : ((i>0) && ((i % 4) == 0));
         if (shouldAppendSpace) {
-            [stringWithAddedSpaces appendString:@" "];
+            [stringWithAddedSpaces appendString:self.separatorCharacter];
             if (i < cursorPositionInSpacelessString) {
                 (*cursorPosition)++;
             }
