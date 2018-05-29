@@ -10,5 +10,5 @@
 
 /// @see http://stackoverflow.com/a/19161529/318790
 @interface CHRCardNumberMask : NSObject <CHRTextMask>
-@property (strong, nonatomic) NSString *separatorCharacter;
+@property (nonatomic, copy) NSString *separatorCharacter;
 @end
